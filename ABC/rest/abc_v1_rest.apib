@@ -1,0 +1,699 @@
+FORMAT: 1A
+
+# ABC v1
+
+Welcome to the ABC v1 REST API documentation. This API documentation is just an example of API Blueprint usage and this is not real API.
+
+This API is JSON-only: <br>
+The request body must be JSON-encoded, having the *Content-Type* header set to `application/json`.
+In return, non-empty responses will also have a *Content-Type* of `application/json`.
+
+# Requests Authorization
+
+Authorization details will be specified later. <br>
+At the moment there is expected that *Token* and *TokenType* Header fields will be set in Headers of each request.
+
+# Response Status Codes
+
+API methods response usually contains `status/code` in response body. <br>
+Full definition of available Status Codes can be found in `API_v1_statusCodes_contract` document.
+
+# Search request body description
+
+Search request structure is independent of ABC entities so following description table should provide better fields understaning.
+
+Body field | Field description
+---|---
+*SearchCriteria* | Root collection of search *Criteria*.
+*Pagination* | Carries Pagination related fields.
+*FetchType* | Specifies FetchType for searched entities. Values defined below.
+*Criteria* | Collection with search parameters.
+*CriteriaOperator* | Operator which is applied against previous criteria sibling instance.
+*ParamsOperator* | Operator applied among Parameter instances.
+*Param* | Instance allows to specify searched key/value pair.
+
+Body field | Possible value | Value description
+---|---|---
+*FetchType* | *lazy* | Fetch only elementary fields. See `EntitiesLazyFetchContract` for elementary fields definition.
+*FetchType* | *eager* | Fetch immediately entities details.
+*CriteriaOperator* or *ParamsOperator* | *AND* | *AND* operator is applied among related (criteria or parameters) instances.
+*CriteriaOperator* or *ParamsOperator* | *OR* | *OR* operator is applied among related (criteria or parameters) instances.
+
+# API methods follow
+
+## Tasks collection [/tasks]
+
+Complete Task entity fields definition can be found in `ABCTypes.xsd`
+
+### Batch Tasks creation [POST]
+
+New Tasks are created based on body fields.
+
++ Request (application/json)
+
+        {
+            "tasks": {
+              "task": [
+                {
+                  "taskId": "?",
+                  "categoryId": "?",
+                  "location": {
+                    "locationId": "?",
+                    "streetAddress": "?",
+                    "city": "?",
+                    "zip": "?",
+                    "state": "?",
+                    "latitude": "?",
+                    "longitude": "?",
+                    "timezone": "?",
+                    ...
+                  },
+                  "name": "?",
+                  ...
+                },
+                {
+                  "taskId": "?",
+                  "categoryId": "?",
+                  "location": {
+                    "locationId": "?",
+                    "streetAddress": "?",
+                    "city": "?",
+                    "zip": "?",
+                    "state": "?",
+                    "latitude": "?",
+                    "longitude": "?",
+                    "timezone": "?",
+                    ...
+                  },
+                  "name": "?",
+                  ...
+                }
+              ]
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "200"
+            },
+            "entitiesResponse": {
+              "entityResponse": [
+              {
+                "id": "1",
+                "status": {
+                  "code": "200"
+                }
+              },
+              {
+                "id": "2",
+                "status": {
+                  "code": "200"
+                }
+              }
+              ]
+            }
+        }
+
+### Batch Tasks update [PUT]
+
+Batch update for provided tasks.
+
++ Request (application/json)
+
+        {
+            "tasks": {
+              "task": [
+                {
+                  "taskId": "?",
+                  "categoryId": "?",
+                  "location": {
+                    "locationId": "?",
+                    "streetAddress": "?",
+                    "city": "?",
+                    "zip": "?",
+                    "state": "?",
+                    "latitude": "?",
+                    "longitude": "?",
+                    "timezone": "?",
+                    ...
+                  },
+                  "name": "?",
+                  ...
+                },
+                {
+                  "taskId": "?",
+                  "categoryId": "?",
+                  "location": {
+                    "locationId": "?",
+                    "streetAddress": "?",
+                    "city": "?",
+                    "zip": "?",
+                    "state": "?",
+                    "latitude": "?",
+                    "longitude": "?",
+                    "timezone": "?",
+                    ...
+                  },
+                  "name": "?",
+                  ...
+                }
+              ]
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "200"
+            },
+            "entitiesResponse": {
+              "entityResponse": [
+              {
+                "id": "1",
+                "status": {
+                  "code": "200"
+                }
+              },
+              {
+                "id": "2",
+                "status": {
+                  "code": "200"
+                }
+              }
+              ]
+            }
+        }
+
+### Delete Tasks [DELETE]
+
+Delete all tasks is not supported.
+
++ Response 405
+
+## Search Tasks [/search/tasks]
+
+### Search Tasks [POST]
+
+Creates Tasks search request and returns all Tasks which match provided query parameters.
+
+Customer requires that search parameters are passed to server through POST request body. GET HTTP request with URI query parameters will not be used in this case despite recommendations.
+
++ Request (application/json)
+
+        {
+            "searchCriteria": {
+                "criteria": [
+                  {
+                    "paramsOperator": "OR",
+                    "param": [
+                      {
+                        "key": "?",
+                        "value": "?"
+                      },
+                      {
+                        "key": "?",
+                        "value": "?"
+                      }
+                    ]
+                  },
+                  {
+                    "criteriaOperator": "AND",
+                    "paramsOperator": "OR",
+                    "param": [
+                      {
+                        "key": "?",
+                        "value": "?"
+                      },
+                      {
+                        "key": "?",
+                        "value": "?"
+                      }
+                    ]
+                  }
+                ]
+            },
+            "pagination": {
+              "index": "0",
+              "limit": "20"
+            },
+            "fetchType": "lazy"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "200"
+            },
+            "tasks": {
+              "task": [
+                {
+                  "taskId": "1",
+                  "categoryId": "?",
+                  "locationId": "?",
+                  "name": "?",
+                  ...
+                },
+                {
+                  "taskId": "2",
+                  "categoryId": "?",
+                  "locationId": "?",
+                  "name": "?",
+                  ...
+                },
+                {
+                  "taskId": "3",
+                  "categoryId": "?",
+                  "locationId": "?",
+                  "name": "?",
+                  ...
+                }
+              ]
+            }
+        }
+
+## Single Task operations based on TaskNumber [/tasks/{taskName}]
+
+### Get Single Task [GET]
+
+Returns specified Task.
+
++ Request SpecificTask
+    + Parameters
+        + taskName: T123 (required, string) - Task Name
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "200"
+            },
+            "tasks": {
+              "task": [
+                {
+                  "taskId": "3",
+                  "categoryId": "?",
+                  "locationId": "?",
+                  "name": "T123",
+                  ...
+                }
+              ]
+            }
+        }
+
+## Single Task operations based on Task ID [/tasks/{taskId}]
+
+### Delete Single Task [DELETE]
+
+Specified Task is deleted.
+
++ Request SpecificTask
+    + Parameters
+        + taskId: 1 (required, number) - Task ID
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "204"
+            }
+        }
+
+## Entity state batch update [/state]
+
+### Update entity state [POST]
+
+Specified entity state is updated based on operation detail.
+
++ Request (application/json)
+
+        {
+        "stateUpdate": [
+         {
+           "entity": "TASK",
+           "operation": "DEACTIVATE",
+            "param": [
+              {
+                "key": "id",
+                "value": "288"
+              }
+            ]
+         },
+         {
+           "entity": "CATEGORY",
+           "operation": "DEACTIVATE",
+            "param": [
+              {
+                "key": "name",
+                "value": "TEST12345"
+              }
+            ]
+         },
+         {
+              "entity": "TASK",
+           "operation": "DEACTIVATE",
+            "param": [
+              {
+                "key": "name",
+                "value": "0305122125"
+              },
+              {
+                "key": "categoryId",
+                "value": "1"
+              }
+            ]
+         }
+        ]
+        }
+
++ Response 200 (application/json)
+
+        {
+           "status":    {
+              "code": 2020
+           },
+           "entitiesResponse": {
+             "entityResponse":    [
+              {
+                 "status":          {
+                    "code": 2000
+                 },
+                 "id": 288
+              },
+              {
+                 "status":          {
+                    "code": 2000
+                 }
+              },
+              {
+                 "status":          {
+                    "code": 2000
+                 }
+              }
+           ]}
+        }
+
+## Categories collection [/categories]
+
+Complete Category entity fields definition can be found in `ABCTypes.xsd`
+
+### Batch Categories creation [POST]
+
+New Categories are created based on body fields.
+
++ Request (application/json)
+
+        {
+          "categories": {
+            "category": [
+              {
+                "categoryId": "?",
+                "location": {
+                  "locationId": "?",
+                  "streetAddress": "?",
+                  "city": "?",
+                  "zip": "?",
+                  "state": "?",
+                  "latitude": "?",
+                  "longitude": "?",
+                  "timezone": "?",
+                  ...
+                },
+                "name": "?",
+                "parentId": "?",
+                ...
+              },
+              {
+                "categoryId": "?",
+                "location": {
+                  "locationId": "?",
+                  "streetAddress": "?",
+                  "city": "?",
+                  "zip": "?",
+                  "state": "?",
+                  "latitude": "?",
+                  "longitude": "?",
+                  "timezone": "?",
+                  ...
+                },
+                "name": "?",
+                "parentId": "?",
+                ...
+              }
+            ]
+          }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "200"
+            },
+            "entitiesResponse": {
+              "entityResponse": [
+              {
+                "id": "1",
+                "status": {
+                  "code": "200"
+                }
+              },
+              {
+                "id": "2",
+                "status": {
+                  "code": "200"
+                }
+              }
+              ]
+            }
+        }
+
+### Batch Categories update [PUT]
+
+Batch update for provided categories.
+
++ Request (application/json)
+
+        {
+          "categories": {
+            "category": [
+              {
+                "categoryId": "?",
+                "location": {
+                  "locationId": "?",
+                  "streetAddress": "?",
+                  "city": "?",
+                  "zip": "?",
+                  "state": "?",
+                  "latitude": "?",
+                  "longitude": "?",
+                  "timezone": "?",
+                  ...
+                },
+                "name": "?",
+                "parentId": "?",
+                ...
+              },
+              {
+                "categoryId": "?",
+                "location": {
+                  "locationId": "?",
+                  "streetAddress": "?",
+                  "city": "?",
+                  "zip": "?",
+                  "state": "?",
+                  "latitude": "?",
+                  "longitude": "?",
+                  "timezone": "?",
+                  ...
+                },
+                "name": "?",
+                "parentId": "?",
+                ...
+              }
+            ]
+          }
+        }
+
++ Response 200
+
+            {
+                "status": {
+                  "code": "200"
+                },
+                "entitiesResponse": {
+                  "entityResponse": [
+                  {
+                    "id": "1",
+                    "status": {
+                      "code": "200"
+                    }
+                  },
+                  {
+                    "id": "2",
+                    "status": {
+                      "code": "200"
+                    }
+                  }
+                  ]
+                }
+            }
+
+### Delete Categories [DELETE]
+
+Delete all categories is not supported.
+
++ Response 405
+
+## Search Categories [/search/categories]
+
+### Search Categories [POST]
+
+Creates Categories search request and returns all Categories which match provided query parameters.
+
+Customer requires that search parameters are passed to server through POST request body. GET HTTP request with URI query parameters will not be used in this case despite recommendations.
+
++ Request (application/json)
+
+        {
+            "searchCriteria": {
+                "criteria": [
+                  {
+                    "paramsOperator": "OR",
+                    "param": [
+                      {
+                        "key": "?",
+                        "value": "?"
+                      },
+                      {
+                        "key": "?",
+                        "value": "?"
+                      }
+                    ]
+                  },
+                  {
+                    "criteriaOperator": "AND",
+                    "paramsOperator": "OR",
+                    "param": [
+                      {
+                        "key": "?",
+                        "value": "?"
+                      },
+                      {
+                        "key": "?",
+                        "value": "?"
+                      }
+                    ]
+                  }
+                ]
+            },
+            "pagination": {
+              "index": "0",
+              "limit": "20"
+            },
+            "fetchType": "lazy"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "200"
+            },
+            "categories": {
+              "category": [
+                  {
+                    "categoryId": "?",
+                    "location": {
+                      "locationId": "?",
+                      "streetAddress": "?",
+                      "city": "?",
+                      "zip": "?",
+                      "state": "?",
+                      "latitude": "?",
+                      "longitude": "?",
+                      "timezone": "?",
+                      ...
+                    },
+                    "name": "?",
+                    "parentId": "?",
+                    ...
+                  },
+                  {
+                    "categoryId": "?",
+                    "location": {
+                      "locationId": "?",
+                      "streetAddress": "?",
+                      "city": "?",
+                      "zip": "?",
+                      "state": "?",
+                      "latitude": "?",
+                      "longitude": "?",
+                      "timezone": "?",
+                      ...
+                    },
+                    "name": "?",
+                    "parentId": "?",
+                    ...
+                  }
+              ]
+            }
+        }
+
+## Single Category operations [/categories/{categoryName}]
+
+### Get Single Category [GET]
+
+Returns specified Category.
+
++ Request SpecificCategory
+    + Parameters
+        + categoryName: Category123 (required, string) - Category Name
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "200"
+            },
+            "categories": {
+              "category": [
+                  {
+                    "categoryId": "?",
+                    "location": {
+                      "locationId": "?",
+                      "streetAddress": "?",
+                      "city": "?",
+                      "zip": "?",
+                      "state": "?",
+                      "latitude": "?",
+                      "longitude": "?",
+                      "timezone": "?",
+                      ...
+                    },
+                    "name": "Category123",
+                    "parentId": "?",
+                    ...
+                  }
+              ]
+            }
+        }
+
+### Delete Single Category [DELETE]
+
+Specified Category is deleted.
+
++ Request
+    + Parameters
+        + categoryName: Category123 (required, string) - Category name
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+              "code": "204"
+            }
+        }
