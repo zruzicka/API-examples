@@ -1,0 +1,1 @@
+dredd --config dredd.yml
