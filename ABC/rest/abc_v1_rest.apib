@@ -201,6 +201,8 @@ Creates Tasks search request and returns all Tasks which match provided query pa
 
 Customer requires that search parameters are passed to server through POST request body. GET HTTP request with URI query parameters will not be used in this case despite recommendations.
 
+Only a few fields are provided in response as an example. Complete entity fields definition can be found in `ABCTypes.xsd`
+
 + Request (application/json)
 
         {
@@ -254,22 +256,19 @@ Customer requires that search parameters are passed to server through POST reque
                   "taskId": "1",
                   "categoryId": "?",
                   "locationId": "?",
-                  "name": "?",
-                  ...
+                  "name": "?"
                 },
                 {
                   "taskId": "2",
                   "categoryId": "?",
                   "locationId": "?",
-                  "name": "?",
-                  ...
+                  "name": "?"
                 },
                 {
                   "taskId": "3",
                   "categoryId": "?",
                   "locationId": "?",
-                  "name": "?",
-                  ...
+                  "name": "?"
                 }
               ]
             }
@@ -280,6 +279,8 @@ Customer requires that search parameters are passed to server through POST reque
 ### Get Single Task [GET]
 
 Returns specified Task.
+
+Only a few fields are provided in response as an example. Complete entity fields definition can be found in `ABCTypes.xsd`
 
 + Request SpecificTask
     + Parameters
@@ -297,8 +298,7 @@ Returns specified Task.
                   "taskId": "3",
                   "categoryId": "?",
                   "locationId": "?",
-                  "name": "T123",
-                  ...
+                  "name": "T123"
                 }
               ]
             }
@@ -556,6 +556,8 @@ Creates Categories search request and returns all Categories which match provide
 
 Customer requires that search parameters are passed to server through POST request body. GET HTTP request with URI query parameters will not be used in this case despite recommendations.
 
+Only a few fields are provided in response as an example. Complete entity fields definition can be found in `ABCTypes.xsd`
+
 + Request (application/json)
 
         {
@@ -615,12 +617,10 @@ Customer requires that search parameters are passed to server through POST reque
                       "state": "?",
                       "latitude": "?",
                       "longitude": "?",
-                      "timezone": "?",
-                      ...
+                      "timezone": "?"
                     },
                     "name": "?",
-                    "parentId": "?",
-                    ...
+                    "parentId": "?"
                   },
                   {
                     "categoryId": "?",
@@ -632,12 +632,10 @@ Customer requires that search parameters are passed to server through POST reque
                       "state": "?",
                       "latitude": "?",
                       "longitude": "?",
-                      "timezone": "?",
-                      ...
+                      "timezone": "?"
                     },
                     "name": "?",
-                    "parentId": "?",
-                    ...
+                    "parentId": "?"
                   }
               ]
             }
@@ -648,6 +646,8 @@ Customer requires that search parameters are passed to server through POST reque
 ### Get Single Category [GET]
 
 Returns specified Category.
+
+Only a few fields are provided in response as an example. Complete entity fields definition can be found in `ABCTypes.xsd`
 
 + Request SpecificCategory
     + Parameters
@@ -671,12 +671,10 @@ Returns specified Category.
                       "state": "?",
                       "latitude": "?",
                       "longitude": "?",
-                      "timezone": "?",
-                      ...
+                      "timezone": "?"
                     },
                     "name": "Category123",
-                    "parentId": "?",
-                    ...
+                    "parentId": "?"
                   }
               ]
             }
