@@ -1,0 +1,4 @@
+TODOs:
+ * Add missing WSDL with SOAP API definition!
+ * Add missing SoapUI project with ABC_SOAP_requests.
+ * Add SOAP_API_v1_contract.
